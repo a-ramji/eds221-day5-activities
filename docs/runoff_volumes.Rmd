@@ -1,0 +1,48 @@
+---
+title: "Runoff Volumes"
+author: "Anna Ramji"
+date: "2023-08-20"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## EDS 221 Day 5 Activities
+
+### Task 1: Make a stormwater runoff estimation function, source in an Rmd
+
+```{r}
+library(tidyverse)
+library(here)
+
+```
+
+Sourcing storm runoff script:
+
+```{r}
+source(here("src", "storm_runoff.R"))
+
+```
+
+-   In a code chunk in your `runoff_volumes.Rmd`, use your `predict_runoff` function to estimate stormwater volume for a watershed of 182 acres, over a range of estimates for the impervious fraction (from 0.6 to 0.8, by increments of 0.01). *Note: you do not need to write a for loop here.*
+
+```{r}
+impervious <- seq(0.6, 0.8, 0.01)
+
+volume_ranges <- predict_runoff(impervious_frac = impervious, area = 182)
+```
+
+```{r}
+stormwater_data <- data.frame(impervious_area = impervious, estimated_volume = volume_ranges)
+```
+
+```{r}
+ggplot(data = stormwater_data, aes(x = impervious_area, y = estimated_volume)) +
+  geom_point() +
+  geom_line() +
+  labs(title = "Impervious area vs. stormwater runoff volume", x = "Fraction of impervious area in watershed (unitless)", y = "Estimated stormwater runoff volume (m^3)")
+
+ggsave(filename = here("figs", "estimated_runoff_volume.png"), width = 10, height = 6)
+```

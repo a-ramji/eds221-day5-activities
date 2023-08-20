@@ -1,0 +1,61 @@
+---
+title: "EDS 221 Day 5 Activities"
+author: "Anna Ramji"
+format: html
+editor: visual
+---
+
+## Day 5 Activities
+
+[Instructions](https://allisonhorst.github.io/EDS_221_programming-essentials/activities/day_5_activities.html)
+
+## **Task 1: Make a function, source in an R Markdown doc**
+
+Citation: [NCDENR Stormwater BMP Manual](https://files.nc.gov/ncdeq/Water%20Quality/Surface%20Water%20Protection/SPU/SPU%20-%20BMP%20Manual%20Documents/BMPMan-Ch03-SWCalcs-20090616-DWQ-SPU.pdf)
+
+One established way to calculate the volume of stormwater expected for a watershed (necessary to design best management practices & systems) is the Simple Method, which involves two steps. First, the runoff coefficient Rv (storm runoff / storm rainfall) is calculated from:
+
+Rv=0.05+0.9∗IA
+
+Where
+
+-   Rv is the runoff coefficient (unitless)
+
+-    IA is the fraction of the watershed that is considered "impervious" (unitless).
+
+The volume of stormwater that needs to be handled, V in cubic feet, is then calculated by:
+
+V=3630∗RD∗Rv∗A
+
+where
+
+-    RD is the "design storm rainfall depth" in inches, usually set to 1.0 or 1.5,
+
+```{=html}
+<!-- -->
+```
+-   Rv is the runoff coefficient calculated above
+
+-   A is the watershed area in acres.
+
+**YOUR TASK:**
+
+-   Create a new R script in `src`, saved as `storm_runoff.R`
+
+-   In the script, create a function called `predict_runoff` that estimates the storm runoff volume using inputs for the impervious fraction and watershed area (you can use a constant value of 1 for RD here). In other words, your function should only require two arguments
+
+-   Add documentation to your function using `Roxygen` comments for practice
+
+-   Try out your function in the Console to ensure that it works
+
+-   Create a new R Markdown document in `docs`, saved as `runoff_volumes.Rmd`
+
+-   Attach the `tidyverse` and `here` packages
+
+-   Source your `storm_runoff.R` script so you are able to use the `predict_runoff` function in your .Rmd
+
+-   In a code chunk in your `runoff_volumes.Rmd`, use your `predict_runoff` function to estimate stormwater volume for a watershed of 182 acres, over a range of estimates for the impervious fraction (from 0.6 to 0.8, by increments of 0.01). *Note: you do not need to write a for loop here.*
+
+-   Bind your sequence of impervious fractions together with the resulting runoff volume calculated into a data frame
+
+-   Create a ggplot graph that has both dots and connecting lines (i.e., you\'ll layer `geom_point()` and `geom_line()`. Update axis labels. Export a png of your graph to the `figs` folder using `ggsave`.
